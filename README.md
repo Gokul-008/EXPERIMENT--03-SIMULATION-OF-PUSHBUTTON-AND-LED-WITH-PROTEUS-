@@ -72,11 +72,55 @@ https://engineeringxpert.com/wp-content/uploads/2022/04/26.png
 
 
 ## STM 32 CUBE PROGRAM :
+```
+Developed by:GokulM
+Reference number:212222230037
 
+#include "main.h"
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+
+int main(void)
+{
+    HAL_Init();
+  SystemClock_Config();
+
+  MX_GPIO_Init();
+ 
+  while (1)
+  {
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+      HAL_Delay(500);
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+      HAL_Delay(500); 
+  }
+}
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+
+void Error_Handler(void)
+{
+  __disable_irq();
+  while (1)
+  {
+  }
+}
+```
 
 
 
 ## Output screen shots of proteus  :
+ # OFF STATE
+ ![OFF](https://user-images.githubusercontent.com/121165996/235101726-ea8ed888-cfb9-4d77-ae18-558ace2cb789.png)
+
+ # ON STATE
+ ![ON](https://user-images.githubusercontent.com/121165996/235101799-e092885e-97e3-4d0d-9645-5be5f67b48fe.png)
+
  
  
  
