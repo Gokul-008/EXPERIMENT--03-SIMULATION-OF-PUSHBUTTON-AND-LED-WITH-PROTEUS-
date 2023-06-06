@@ -64,8 +64,7 @@ We are now at the last part of step by step guide on how to simulate STM32 proje
 ![image](https://user-images.githubusercontent.com/36288975/233856847-32bea88a-565f-4e01-9c7e-4f7ed546ddf6.png)
 
 14. Double click on the the MCU part to open settings. Next to the Program File option, give full path to the Hex file generated using STM32Cube IDE. Then set the external crystal frequency to 8M (i.e. 8 MHz). Click OK to save the changes.
-https://engineeringxpert.com/wp-content/uploads/2022/04/26.png
-
+![image](https://user-images.githubusercontent.com/36288975/234186668-f21e74f6-8958-4eb2-899f-8e53770a5c06.png)
 15. click on debug and simulate using simulation as shown below 
 
 ![image](https://user-images.githubusercontent.com/36288975/233856904-99eb708a-c907-4595-9025-c9dbd89b8879.png)
@@ -73,59 +72,58 @@ https://engineeringxpert.com/wp-content/uploads/2022/04/26.png
 
 ## STM 32 CUBE PROGRAM :
 ```
-Developed by:GokulM
-Reference number:212222230037
 
 #include "main.h"
+#include <stdbool.h>
+
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+void push_button();
+bool button_status;
 
 int main(void)
 {
-    HAL_Init();
+
+  HAL_Init();
+
   SystemClock_Config();
 
   MX_GPIO_Init();
- 
+
+  void push_button()
+  {
+  	button_status = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4);
+  	if (button_status == 0)
+  	{
+  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+  		HAL_Delay(500);
+  	}
+  	else
+  	{
+  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+  		HAL_Delay(500);
+  	}
+  }
+  
   while (1)
   {
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
-      HAL_Delay(500);
-      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
-      HAL_Delay(500); 
+	  push_button();
   }
 }
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
-
-
-void Error_Handler(void)
-{
-  __disable_irq();
-  while (1)
-  {
-  }
-}
+#endif
 ```
 
 
 
 ## Output screen shots of proteus  :
- # OFF STATE
- ![OFF](https://user-images.githubusercontent.com/121165996/235101726-ea8ed888-cfb9-4d77-ae18-558ace2cb789.png)
-
- # ON STATE
- ![ON](https://user-images.githubusercontent.com/121165996/235101799-e092885e-97e3-4d0d-9645-5be5f67b48fe.png)
+![image](https://user-images.githubusercontent.com/118343698/235467498-1fd128b9-b1ba-4e64-b0ee-bdc40c181b6e.png)
+![image](https://user-images.githubusercontent.com/118343698/235467544-ea5918d5-2e3f-4c9a-a174-d3118faa898e.png)
 
  
- 
- 
+ ![image](https://github.com/JoyceBeulah/EXPERIMENT--03-SIMULATION-OF-PUSHBUTTON-AND-LED-WITH-PROTEUS-/assets/118343698/7593da7d-1681-4356-9244-c137f0b2cfe4)
+
  
 ## Result :
 Interfacing a digital output and digital input  with ARM microcontroller are simulated in proteus and the results are verified.
-
 
